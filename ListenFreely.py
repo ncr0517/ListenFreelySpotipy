@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Jun 28 09:33:54 2020
-
-@author: nithinravi
-"""
 
 import os
 
@@ -21,9 +16,6 @@ os.environ["SPOTIPY_REDIRECT_URI"] = "http://localhost:8080"
 #logger = logging.getLogger('examples.create_playlist')
 #logging.basicConfig(level='DEBUG')
 
-
-#inputs to take: before a certain time. After a certain time. These are inputs to current user recently played
-
 #collects user information
 def get_args():
     playlistName = input('Enter a playlist name --> ')
@@ -36,7 +28,6 @@ def get_args():
 def main():
     playlistName, playlistDescription, username, numSong = get_args()
     scope = "playlist-modify-public user-read-recently-played playlist-modify-public"
-    uir = "http://localhost:8080"
     token = util.prompt_for_user_token(username, scope)
     print("SUCCESS")
     sp = spotipy.Spotify(auth=token)
