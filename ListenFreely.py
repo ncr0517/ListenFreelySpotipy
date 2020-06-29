@@ -8,6 +8,7 @@ Created on Sun Jun 28 09:33:54 2020
 
 import os
 import sys
+import json
 
 import argparse
 import logging
@@ -31,30 +32,34 @@ logging.basicConfig(level='DEBUG')
 
 
 def get_args():
-    parser = argparse.ArgumentParser(description='Creates a playlist for user')
-    parser.add_argument('-p', '--playlist', required=True,
-                        help='Name of Playlist')
-    parser.add_argument('-d', '--description', required=False, default='',
-                        help='Description of Playlist')
-    return parser.parse_args()
+    #parser = argparse.ArgumentParser(description='Creates a playlist for user')
+    #parser.add_argument('-p', '--playlist', required=True,
+    #                    help='Name of Playlist')
+    #parser.add_argument('-d', '--description', required=False, default='',
+    #                    help='Description of Playlist')
+    playlistName = input('Enter a playlist name --> ')
+    playlistDescription = input('Enter a playlist description --> ')
+    username = input('Enter a spotify username --> ')
+    numSong = int(input('How many recent songs in your playlist? --> '))
+    return playlistName, playlistDescription, username, numSong
 
 
 def main():
-    args = get_args()
-    scope = "playlist-modify-public user-read-recently-played"
+    #args = get_args()
+    playlistName, playlistDescription, username, numSong = get_args()
+    scope = "playlist-modify-public user-read-recently-played playlist-modify-public"
     uir = "http://localhost:8080"
-    username = "ncr0517"
     token = util.prompt_for_user_token(username, scope, None, None, uir)
-    
     print("SUCCESS")
     sp = spotipy.Spotify(auth=token)
-    #sp = spotipy.Spotify(auth=token)
-    #sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
     user_id = sp.me()['id']
     print("mark" + user_id)
-    for item in sp.current_user_recently_played(limit=1):
-        print(item + "\n")
-    #sp.user_playlist_create(user_id, args.playlist)
+    playlist = sp.user_playlist_create(user_id, playlistName, True, playlistDescription)
+    playlist_id = playlist["id"]
+    tracks = []
+    for item in sp.current_user_recently_played(limit=numSong)["items"]:
+        tracks.append(item["track"]["id"])
+    sp.user_playlist_add_tracks(user_id, playlist_id, tracks, position=None)
 
 
 if __name__ == '__main__':
