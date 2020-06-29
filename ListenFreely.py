@@ -16,9 +16,9 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy.util as util
 
-os.environ["SPOTIPY_CLIENT_ID"] = "4ea0770420a94160955f4b372053c50f"
+os.environ["SPOTIPY_CLIENT_ID"] = "CLIENT_ID_HERE"
 #sys.argv[1]
-os.environ["SPOTIPY_CLIENT_SECRET"] = "d6336e14ce1a4c3681e1c5ae6ef60067"
+os.environ["SPOTIPY_CLIENT_SECRET"] = "CLIENT_SECRET_HERE"
 #sys.argv[2]
 os.environ["SPOTIPY_REDIRECT_URI"] = "http://localhost:8080"
 
