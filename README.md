@@ -16,5 +16,5 @@ python3 ListenFreely.py
 
 Follow the command line instructions and hit enter when done.
 
-### Enjoy your fresh playlist!!
+### Enjoy your fresh playlist!
 
